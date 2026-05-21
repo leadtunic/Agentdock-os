@@ -1,0 +1,4 @@
+
+> @agentdock/shared@0.1.0 typecheck /Users/giovaniricetto/Documents/agentdock-os/packages/shared
+> tsc -p tsconfig.json --noEmit
+

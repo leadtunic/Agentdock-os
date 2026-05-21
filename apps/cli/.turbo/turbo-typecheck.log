@@ -1,0 +1,4 @@
+
+> @agentdock/cli@0.1.0 typecheck /Users/giovaniricetto/Documents/agentdock-os/apps/cli
+> tsc --noEmit
+

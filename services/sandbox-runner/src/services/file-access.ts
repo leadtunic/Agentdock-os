@@ -26,17 +26,24 @@ export function isPathAllowed(path: string, sandbox: SandboxSession): { allowed:
 export function validateFileOperation(operation: FileOperation, sandbox: SandboxSession): FileOperation {
   const pathCheck = isPathAllowed(operation.path, sandbox);
 
-  return {
+  const result: FileOperation = {
     ...operation,
     allowed: pathCheck.allowed,
-    reason: pathCheck.reason,
   };
+  if (pathCheck.reason !== undefined) {
+    result.reason = pathCheck.reason;
+  }
+  return result;
 }
 
 export function readFile(path: string, sandbox: SandboxSession): { success: boolean; content?: string; error?: string } {
   const validation = validateFileOperation({ path, operation: 'read', allowed: false }, sandbox);
   if (!validation.allowed) {
-    return { success: false, error: validation.reason };
+    const result: { success: boolean; error?: string } = { success: false };
+    if (validation.reason !== undefined) {
+      result.error = validation.reason;
+    }
+    return result;
   }
 
   try {
@@ -60,7 +67,11 @@ export function readFile(path: string, sandbox: SandboxSession): { success: bool
 export function writeFile(path: string, content: string, sandbox: SandboxSession): { success: boolean; error?: string } {
   const validation = validateFileOperation({ path, operation: 'write', allowed: false }, sandbox);
   if (!validation.allowed) {
-    return { success: false, error: validation.reason };
+    const result: { success: boolean; error?: string } = { success: false };
+    if (validation.reason !== undefined) {
+      result.error = validation.reason;
+    }
+    return result;
   }
 
   if (content.length > 5 * 1024 * 1024) {
@@ -88,7 +99,11 @@ export function writeFile(path: string, content: string, sandbox: SandboxSession
 export function listDirectory(path: string, sandbox: SandboxSession): { success: boolean; files?: string[]; error?: string } {
   const validation = validateFileOperation({ path, operation: 'list', allowed: false }, sandbox);
   if (!validation.allowed) {
-    return { success: false, error: validation.reason };
+    const result: { success: boolean; error?: string } = { success: false };
+    if (validation.reason !== undefined) {
+      result.error = validation.reason;
+    }
+    return result;
   }
 
   try {
@@ -106,7 +121,11 @@ export function listDirectory(path: string, sandbox: SandboxSession): { success:
 export function deleteFile(path: string, sandbox: SandboxSession): { success: boolean; error?: string } {
   const validation = validateFileOperation({ path, operation: 'delete', allowed: false }, sandbox);
   if (!validation.allowed) {
-    return { success: false, error: validation.reason };
+    const result: { success: boolean; error?: string } = { success: false };
+    if (validation.reason !== undefined) {
+      result.error = validation.reason;
+    }
+    return result;
   }
 
   try {
@@ -124,7 +143,11 @@ export function deleteFile(path: string, sandbox: SandboxSession): { success: bo
 export function fileExists(path: string, sandbox: SandboxSession): { exists: boolean; isDirectory?: boolean; error?: string } {
   const validation = validateFileOperation({ path, operation: 'exists', allowed: false }, sandbox);
   if (!validation.allowed) {
-    return { exists: false, error: validation.reason };
+    const result: { exists: boolean; error?: string } = { exists: false };
+    if (validation.reason !== undefined) {
+      result.error = validation.reason;
+    }
+    return result;
   }
 
   try {
@@ -140,7 +163,11 @@ export function fileExists(path: string, sandbox: SandboxSession): { exists: boo
 export function getFileInfo(path: string, sandbox: SandboxSession): { success: boolean; info?: Record<string, unknown>; error?: string } {
   const validation = validateFileOperation({ path, operation: 'read', allowed: false }, sandbox);
   if (!validation.allowed) {
-    return { success: false, error: validation.reason };
+    const result: { success: boolean; error?: string } = { success: false };
+    if (validation.reason !== undefined) {
+      result.error = validation.reason;
+    }
+    return result;
   }
 
   try {

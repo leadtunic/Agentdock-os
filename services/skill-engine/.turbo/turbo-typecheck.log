@@ -1,0 +1,4 @@
+
+> @agentdock/skill-engine@0.1.0 typecheck /Users/giovaniricetto/Documents/agentdock-os/services/skill-engine
+> tsc -p tsconfig.json --noEmit
+

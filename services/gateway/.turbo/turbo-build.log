@@ -1,0 +1,4 @@
+
+> @agentdock/gateway@0.1.0 build /Users/giovaniricetto/Documents/agentdock-os/services/gateway
+> tsc -p tsconfig.json
+

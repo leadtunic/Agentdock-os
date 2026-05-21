@@ -28,11 +28,14 @@ export async function handleDiscordEvent(event: Record<string, unknown>): Promis
     };
 
     if (data.attachments) {
-      channelMessage.attachments = ((data.attachments as unknown[]) ?? []).map((a: Record<string, unknown>) => ({
-        type: 'file' as const,
-        url: a.url as string | undefined,
-        filename: a.filename as string | undefined,
-      }));
+      channelMessage.attachments = ((data.attachments as unknown[]) ?? []).map((a: unknown) => {
+        const obj = a as Record<string, unknown>;
+        return {
+          type: 'file' as const,
+          url: obj.url as string,
+          filename: obj.filename as string,
+        };
+      });
     }
 
     pendingMessages.set(channelMessage.id, channelMessage);

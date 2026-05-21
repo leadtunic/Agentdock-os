@@ -11,7 +11,12 @@ import {
   deleteChannel,
 } from '../services/channel-manager.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getId(req: Request): string {
+  const id = Array.isArray(getId(req)) ? getId(req)[0] : getId(req);
+  return id ?? '';
+}
 
 const createChannelSchema = z.object({
   type: z.enum(['telegram', 'discord', 'slack', 'email', 'webhook', 'webchat']),
@@ -54,7 +59,7 @@ router.get('/', authMiddleware, (req: Request, res: Response) => {
 
 router.get('/:id', authMiddleware, (req: Request, res: Response) => {
   try {
-    const channel = getChannel(req.params.id);
+    const channel = getChannel(getId(req));
     if (!channel) {
       return res.status(404).json({ error: 'Channel not found' });
     }
@@ -76,7 +81,7 @@ router.patch('/:id/status', authMiddleware, (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const channel = updateChannelStatus(req.params.id, parsed.data.status);
+    const channel = updateChannelStatus(getId(req), parsed.data.status);
     if (!channel) {
       return res.status(404).json({ error: 'Channel not found' });
     }
@@ -90,7 +95,7 @@ router.patch('/:id/status', authMiddleware, (req: Request, res: Response) => {
 
 router.patch('/:id/config', authMiddleware, (req: Request, res: Response) => {
   try {
-    const channel = updateChannelConfig(req.params.id, req.body);
+    const channel = updateChannelConfig(getId(req), req.body);
     if (!channel) {
       return res.status(404).json({ error: 'Channel not found' });
     }
@@ -103,11 +108,11 @@ router.patch('/:id/config', authMiddleware, (req: Request, res: Response) => {
 
 router.delete('/:id', authMiddleware, (req: Request, res: Response) => {
   try {
-    const deleted = deleteChannel(req.params.id);
+    const deleted = deleteChannel(getId(req));
     if (!deleted) {
       return res.status(404).json({ error: 'Channel not found' });
     }
-    return res.json({ id: req.params.id, deleted: true });
+    return res.json({ id: getId(req), deleted: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return res.status(500).json({ error: message });

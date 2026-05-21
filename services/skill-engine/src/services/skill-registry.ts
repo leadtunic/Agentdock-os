@@ -1,4 +1,4 @@
-import type { Skill, SkillDefinition, SkillPermission, PermissionType, PermissionLevel } from '../types.js';
+import type { Skill, SkillDefinition, SkillPermission, PermissionType, PermissionLevel, SkillStep } from '../types.js';
 
 const skills = new Map<string, Skill>();
 const versions = new Map<string, Skill[]>();
@@ -11,16 +11,25 @@ export function createSkill(params: SkillDefinition): Skill {
     description: params.description,
     version: params.version,
     instructions: params.instructions,
-    steps: params.steps.map((step) => ({
-      id: crypto.randomUUID(),
-      name: step.name,
-      description: step.description,
-      action: step.action,
-      parameters: step.parameters,
-      condition: step.condition,
-      timeout: step.timeout,
-      retryCount: step.retryCount,
-    })),
+    steps: params.steps.map((step) => {
+      const skillStep: SkillStep = {
+        id: crypto.randomUUID(),
+        name: step.name,
+        description: step.description,
+        action: step.action,
+        parameters: step.parameters,
+      };
+      if (step.condition !== undefined) {
+        skillStep.condition = step.condition;
+      }
+      if (step.timeout !== undefined) {
+        skillStep.timeout = step.timeout;
+      }
+      if (step.retryCount !== undefined) {
+        skillStep.retryCount = step.retryCount;
+      }
+      return skillStep;
+    }),
     permissions: params.permissions.map((p) => ({
       type: p.type,
       resource: p.resource,
@@ -140,7 +149,7 @@ export function getActiveSkillCount(): number {
 
 export function hasPermission(skill: Skill, type: PermissionType, resource: string, level: PermissionLevel): boolean {
   return skill.permissions.some((p) => {
-    const typeMatch = p.type === type || p.type === 'full';
+    const typeMatch = p.type === type;
     const resourceMatch = p.resource === resource || p.resource === '*';
     const levelMatch = p.level === level || p.level === 'full';
     return typeMatch && resourceMatch && levelMatch;

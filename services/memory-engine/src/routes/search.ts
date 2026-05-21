@@ -3,8 +3,9 @@ import { z } from 'zod';
 import { search, searchBySimilarity, getRecentMemories, getFrequentlyAccessedMemories } from '../services/memory-search.js';
 import { prepareEmbeddings, cosineSimilarity, getEmbedding } from '../services/embedding-service.js';
 import { getMemory, listMemories } from '../services/memory-store.js';
+import type { Memory, MemoryType } from '../types.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.post('/', (req: Request, res: Response) => {
   try {
@@ -33,10 +34,15 @@ router.post('/', (req: Request, res: Response) => {
 router.get('/recent', (req: Request, res: Response) => {
   try {
     const scope = typeof req.query.scope === 'string' ? req.query.scope : undefined;
-    const type = typeof req.query.type === 'string' ? req.query.type : undefined;
+    const type = typeof req.query.type === 'string' ? req.query.type as MemoryType : undefined;
     const limit = typeof req.query.limit === 'string' ? parseInt(req.query.limit, 10) : undefined;
 
-    const memories = getRecentMemories({ scope, type: type as Parameters<typeof getRecentMemories>[0], limit });
+    const filter: { scope?: string; type?: MemoryType; limit?: number } = {};
+    if (scope !== undefined) filter.scope = scope;
+    if (type !== undefined) filter.type = type;
+    if (limit !== undefined) filter.limit = limit;
+
+    const memories = getRecentMemories(filter);
     return res.json({ memories, total: memories.length });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -49,7 +55,11 @@ router.get('/frequent', (req: Request, res: Response) => {
     const scope = typeof req.query.scope === 'string' ? req.query.scope : undefined;
     const limit = typeof req.query.limit === 'string' ? parseInt(req.query.limit, 10) : undefined;
 
-    const memories = getFrequentlyAccessedMemories({ scope, limit });
+    const filter: { scope?: string; limit?: number } = {};
+    if (scope !== undefined) filter.scope = scope;
+    if (limit !== undefined) filter.limit = limit;
+
+    const memories = getFrequentlyAccessedMemories(filter);
     return res.json({ memories, total: memories.length });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -95,7 +105,7 @@ router.post('/embed', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const memoriesToEmbed: Array<{ id: string; content: string; type: string; scope: string; tags: string[]; metadata: Record<string, unknown>; createdAt: string; updatedAt: string; accessCount: number }> = [];
+    const memoriesToEmbed: Memory[] = [];
     for (const id of parsed.data.memoryIds) {
       const memory = getMemory(id);
       if (memory) {

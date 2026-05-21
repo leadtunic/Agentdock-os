@@ -8,7 +8,7 @@ import webhooksRouter from './routes/webhooks.js';
 import channelsRouter from './routes/channels.js';
 import { createWebchatSession, cleanupInactiveSessions } from './services/webchat.js';
 
-const app = express();
+const app: express.Express = express();
 
 app.use(helmet());
 app.use(cors());

@@ -8,7 +8,7 @@ import sessionsRouter from './routes/sessions.js';
 import actionsRouter from './routes/actions.js';
 import { shutdown } from './services/browser-manager.js';
 
-const app = express();
+const app: express.Express = express();
 
 app.use(helmet());
 app.use(cors());
@@ -17,10 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use((req, _res, next) => {
   const start = Date.now();
-  res.on('finish', () => {
+  _res.on('finish', () => {
     const duration = Date.now() - start;
     if (config.logLevel === 'debug') {
-      console.log(`${req.method} ${req.path} ${res.statusCode} ${duration}ms`);
+      console.log(`${req.method} ${req.path} ${_res.statusCode} ${duration}ms`);
     }
   });
   next();

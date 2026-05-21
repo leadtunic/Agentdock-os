@@ -2,7 +2,7 @@ import { Router, type Request, type Response } from 'express';
 import { config } from '../config.js';
 import { getChannelCount, getActiveChannelCount } from '../services/channel-manager.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', (_req: Request, res: Response) => {
   res.json({

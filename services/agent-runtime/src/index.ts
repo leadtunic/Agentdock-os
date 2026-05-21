@@ -7,7 +7,7 @@ import healthRouter from './routes/health.js';
 import sessionsRouter from './routes/sessions.js';
 import toolCallsRouter from './routes/tool-calls.js';
 
-const app = express();
+const app: express.Express = express();
 
 app.use(helmet());
 app.use(cors());

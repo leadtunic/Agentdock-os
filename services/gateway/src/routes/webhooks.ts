@@ -7,11 +7,16 @@ import { handleDiscordEvent } from '../services/discord.js';
 import { handleSlackEvent } from '../services/slack.js';
 import { handleEmailReply } from '../services/email.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getChannel(req: Request): string {
+  const channel = Array.isArray(req.params.channel) ? req.params.channel[0] : req.params.channel;
+  return channel ?? '';
+}
 
 router.post('/:channel', webhookAuthMiddleware, (req: Request, res: Response) => {
   try {
-    const channel = req.params.channel;
+    const channel = getChannel(req);
     const payload = req.body;
 
     const event = processWebhook(channel, payload);

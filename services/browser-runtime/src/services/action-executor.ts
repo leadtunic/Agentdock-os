@@ -73,7 +73,7 @@ export async function executeAction(pageId: string, action: BrowserAction): Prom
       }
 
       case 'snapshot': {
-        const snapshot = await page.accessibility.snapshot();
+        const snapshot = await (page as any).accessibility?.snapshot?.() ?? null;
         const title = await page.title();
         const url = page.url();
         return {

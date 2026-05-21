@@ -11,7 +11,7 @@ import {
 import { executeToolCall, executeApprovedToolCall } from '../services/tool-executor.js';
 import { estimateCost } from '../services/provider-client.js';
 
-const router = Router();
+const router: Router = Router();
 
 const toolCallSchema = z.object({
   toolName: z.string().min(1),

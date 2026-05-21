@@ -5,7 +5,12 @@ import { createPage, getPage } from '../services/browser-manager.js';
 import { executeAction } from '../services/action-executor.js';
 import { captureScreenshot, getPageSnapshot, getPageAccessibilitySnapshot } from '../services/screenshot-capture.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getSessionId(req: Request): string {
+  const id = Array.isArray(req.params.sessionId) ? req.params.sessionId[0] : req.params.sessionId;
+  return id ?? '';
+}
 
 const actionSchema = z.object({
   type: z.enum(['open_url', 'click', 'type', 'select', 'navigate', 'screenshot', 'snapshot', 'scroll', 'hover', 'press_key', 'evaluate']),
@@ -24,16 +29,16 @@ router.post('/:sessionId', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const session = getSession(req.params.sessionId);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
 
-    updateSessionStatus(req.params.sessionId, 'busy');
+    updateSessionStatus(getSessionId(req), 'busy');
 
     const page = getPage(session.profileId);
     if (!page) {
-      updateSessionStatus(req.params.sessionId, 'error');
+      updateSessionStatus(getSessionId(req), 'error');
       return res.status(400).json({ error: 'No active page for this session' });
     }
 
@@ -41,18 +46,18 @@ router.post('/:sessionId', async (req: Request, res: Response) => {
     const result = await executeAction(pageId, parsed.data);
 
     if (parsed.data.type === 'open_url' && result.success && parsed.data.url) {
-      setSessionUrl(req.params.sessionId, parsed.data.url);
+      setSessionUrl(getSessionId(req), parsed.data.url);
     }
 
     if (parsed.data.type === 'screenshot' && result.screenshot) {
-      addScreenshot(req.params.sessionId, { base64: result.screenshot });
+      addScreenshot(getSessionId(req), { base64: result.screenshot });
     }
 
     const finalStatus = result.success ? 'idle' : 'error';
-    updateSessionStatus(req.params.sessionId, finalStatus);
+    updateSessionStatus(getSessionId(req), finalStatus);
 
     return res.json({
-      sessionId: req.params.sessionId,
+      sessionId: getSessionId(req),
       action: parsed.data.type,
       success: result.success,
       output: result.output,
@@ -69,7 +74,7 @@ router.post('/:sessionId', async (req: Request, res: Response) => {
 
 router.post('/:sessionId/screenshot', async (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.sessionId);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -81,10 +86,10 @@ router.post('/:sessionId/screenshot', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Failed to capture screenshot' });
     }
 
-    addScreenshot(req.params.sessionId, { base64 });
+    addScreenshot(getSessionId(req), { base64 });
 
     return res.json({
-      sessionId: req.params.sessionId,
+      sessionId: getSessionId(req),
       screenshot: base64,
       fullPage,
     });
@@ -96,7 +101,7 @@ router.post('/:sessionId/screenshot', async (req: Request, res: Response) => {
 
 router.get('/:sessionId/snapshot', async (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.sessionId);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -107,7 +112,7 @@ router.get('/:sessionId/snapshot', async (req: Request, res: Response) => {
     }
 
     return res.json({
-      sessionId: req.params.sessionId,
+      sessionId: getSessionId(req),
       ...snapshot,
     });
   } catch (error) {
@@ -118,7 +123,7 @@ router.get('/:sessionId/snapshot', async (req: Request, res: Response) => {
 
 router.get('/:sessionId/accessibility', async (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.sessionId);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -126,7 +131,7 @@ router.get('/:sessionId/accessibility', async (req: Request, res: Response) => {
     const snapshot = await getPageAccessibilitySnapshot(session.profileId);
 
     return res.json({
-      sessionId: req.params.sessionId,
+      sessionId: getSessionId(req),
       accessibility: snapshot,
     });
   } catch (error) {
@@ -137,13 +142,13 @@ router.get('/:sessionId/accessibility', async (req: Request, res: Response) => {
 
 router.get('/:sessionId/errors', (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.sessionId);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
 
     return res.json({
-      sessionId: req.params.sessionId,
+      sessionId: getSessionId(req),
       consoleErrors: session.consoleErrors,
       networkErrors: session.networkErrors,
       totalErrors: session.consoleErrors.length + session.networkErrors.length,

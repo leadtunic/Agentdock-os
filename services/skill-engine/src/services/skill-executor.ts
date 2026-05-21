@@ -23,9 +23,13 @@ export async function executeSkill(skill: Skill, context: {
     totalSteps: skill.steps.length,
     results: [],
     startedAt: new Date().toISOString(),
-    agentId: context.agentId,
-    sessionId: context.sessionId,
   };
+  if (context.agentId !== undefined) {
+    execution.agentId = context.agentId;
+  }
+  if (context.sessionId !== undefined) {
+    execution.sessionId = context.sessionId;
+  }
 
   executions.set(execution.id, execution);
 
@@ -116,15 +120,18 @@ async function executeStep(
       Object.assign(variables, { [`step_${step.name}`]: result.output });
     }
 
-    return {
+    const stepResult: StepResult = {
       stepId: step.id,
       stepName: step.name,
       status: result.success ? 'completed' : 'failed',
       output: result.output,
-      error: result.success ? undefined : 'Step executor returned failure',
       durationMs: Date.now() - start,
       timestamp: new Date().toISOString(),
     };
+    if (!result.success) {
+      stepResult.error = 'Step executor returned failure';
+    }
+    return stepResult;
   } catch (error) {
     return {
       stepId: step.id,

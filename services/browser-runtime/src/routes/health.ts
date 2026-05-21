@@ -3,7 +3,7 @@ import { config } from '../config.js';
 import { isBrowserRunning, getActiveSessionCount, getActivePageCount } from '../services/browser-manager.js';
 import { getSessionCount, getActiveSessionCount as getActiveSessionCountFromManager } from '../services/session-manager.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', (_req: Request, res: Response) => {
   res.json({

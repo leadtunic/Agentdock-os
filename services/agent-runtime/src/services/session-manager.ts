@@ -150,7 +150,7 @@ export function getActiveSessionCount(): number {
   ).length;
 }
 
-function addAuditLog(sessionId: string, action: string, actor: string, details: Record<string, unknown>): void {
+export function addAuditLog(sessionId: string, action: string, actor: string, details: Record<string, unknown>): void {
   auditLogs.push({
     id: crypto.randomUUID(),
     timestamp: new Date().toISOString(),

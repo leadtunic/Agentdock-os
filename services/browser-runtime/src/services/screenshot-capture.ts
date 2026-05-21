@@ -53,5 +53,5 @@ export async function getPageAccessibilitySnapshot(pageId: string): Promise<unkn
   const page = getPage(pageId);
   if (!page) return undefined;
 
-  return page.accessibility.snapshot();
+  return (page as any).accessibility?.snapshot?.() ?? null;
 }

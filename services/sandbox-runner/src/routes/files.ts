@@ -11,8 +11,9 @@ import {
   isPathAllowed,
 } from '../services/file-access.js';
 import { runCommandWithLimits } from '../services/command-runner.js';
+import type { CommandRequest } from '../types.js';
 
-const router = Router();
+const router: Router = Router();
 
 const readFileSchema = z.object({
   path: z.string().min(1),
@@ -222,12 +223,20 @@ router.post('/run', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Sandbox not found' });
     }
 
-    const result = await runCommandWithLimits(sandbox, {
+    const commandRequest: CommandRequest = {
       command: parsed.data.command,
-      args: parsed.data.args,
-      cwd: parsed.data.cwd,
-      timeout: parsed.data.timeout,
-    });
+    };
+    if (parsed.data.args !== undefined) {
+      commandRequest.args = parsed.data.args;
+    }
+    if (parsed.data.cwd !== undefined) {
+      commandRequest.cwd = parsed.data.cwd;
+    }
+    if (parsed.data.timeout !== undefined) {
+      commandRequest.timeout = parsed.data.timeout;
+    }
+
+    const result = await runCommandWithLimits(sandbox, commandRequest);
 
     return res.json(result);
   } catch (error) {

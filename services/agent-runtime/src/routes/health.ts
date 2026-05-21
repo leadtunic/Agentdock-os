@@ -2,7 +2,7 @@ import { Router, type Request, type Response } from 'express';
 import { config } from '../config.js';
 import { getSessionCount, getActiveSessionCount } from '../services/session-manager.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', (_req: Request, res: Response) => {
   res.json({

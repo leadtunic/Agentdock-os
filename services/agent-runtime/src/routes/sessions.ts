@@ -12,7 +12,12 @@ import {
   getAuditLogs,
 } from '../services/session-manager.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getId(req: Request): string {
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  return id ?? '';
+}
 
 const createSessionSchema = z.object({
   agentId: z.string().min(1),
@@ -70,7 +75,7 @@ router.get('/', (_req: Request, res: Response) => {
 
 router.get('/:id', (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.id);
+    const session = getSession(getId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -93,7 +98,7 @@ router.patch('/:id/status', (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const session = updateSessionStatus(req.params.id, parsed.data.status, parsed.data.error);
+    const session = updateSessionStatus(getId(req), parsed.data.status, parsed.data.error);
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -118,7 +123,7 @@ router.post('/:id/messages', (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const session = addMessage(req.params.id, parsed.data);
+    const session = addMessage(getId(req), parsed.data);
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -132,7 +137,7 @@ router.post('/:id/messages', (req: Request, res: Response) => {
 
 router.get('/:id/cost', (req: Request, res: Response) => {
   try {
-    const records = getCostRecords(req.params.id);
+    const records = getCostRecords(getId(req));
     const totalCost = records.reduce((sum, r) => sum + r.costUsd, 0);
     return res.json({ records, totalCost, recordCount: records.length });
   } catch (error) {
@@ -143,7 +148,7 @@ router.get('/:id/cost', (req: Request, res: Response) => {
 
 router.get('/:id/audit', (req: Request, res: Response) => {
   try {
-    const logs = getAuditLogs(req.params.id);
+    const logs = getAuditLogs(getId(req));
     return res.json({ logs, total: logs.length });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';

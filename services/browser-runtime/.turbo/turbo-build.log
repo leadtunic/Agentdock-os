@@ -1,0 +1,4 @@
+
+> @agentdock/browser-runtime@0.1.0 build /Users/giovaniricetto/Documents/agentdock-os/services/browser-runtime
+> tsc -p tsconfig.json
+

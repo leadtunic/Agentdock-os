@@ -139,7 +139,7 @@ export function validatePermissions(permissions: SkillPermission[]): ValidationR
 export function validateYamlSkill(content: string): ValidationResult {
   try {
     const parsed = parseYamlLike(content);
-    return validateSkillDefinition(parsed as SkillDefinition);
+    return validateSkillDefinition(parsed as unknown as SkillDefinition);
   } catch (error) {
     return {
       valid: false,

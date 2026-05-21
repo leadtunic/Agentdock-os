@@ -1,0 +1,4 @@
+
+> @agentdock/agent-client@0.1.0 lint /Users/giovaniricetto/Documents/agentdock-os/packages/agent-client
+> tsc -p tsconfig.json --noEmit
+

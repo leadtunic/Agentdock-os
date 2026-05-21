@@ -1,6 +1,7 @@
 import { Router, type Request, type Response } from 'express';
 import { z } from 'zod';
 import type { AuthRequest } from '../middleware/auth.js';
+import type { SkillDefinition, Skill } from '../types.js';
 import {
   createSkill,
   getSkill,
@@ -13,7 +14,12 @@ import {
 } from '../services/skill-registry.js';
 import { validateSkillDefinition, validateYamlSkill, validateJsonSkill } from '../services/skill-validator.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getId(req: Request): string {
+  const id = getId(req);
+  return id ?? '';
+}
 
 const createSkillSchema = z.object({
   name: z.string().min(1),
@@ -68,12 +74,12 @@ router.post('/', (req: AuthRequest, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const validation = validateSkillDefinition(parsed.data);
+    const validation = validateSkillDefinition(parsed.data as unknown as SkillDefinition);
     if (!validation.valid) {
       return res.status(400).json({ error: 'Invalid skill definition', details: validation.errors });
     }
 
-    const skill = createSkill(parsed.data);
+    const skill = createSkill(parsed.data as unknown as SkillDefinition);
 
     return res.status(201).json({ ...skill, validationWarnings: validation.warnings });
   } catch (error) {
@@ -89,7 +95,13 @@ router.get('/', (req: Request, res: Response) => {
     const tags = typeof req.query.tags === 'string' ? req.query.tags.split(',') : undefined;
     const name = typeof req.query.name === 'string' ? req.query.name : undefined;
 
-    const skills = listSkills({ agentId, active, tags, name });
+    const filter: { agentId?: string; active?: boolean; tags?: string[]; name?: string } = {};
+    if (agentId !== undefined) filter.agentId = agentId;
+    if (active !== undefined) filter.active = active;
+    if (tags !== undefined) filter.tags = tags;
+    if (name !== undefined) filter.name = name;
+
+    const skills = listSkills(filter);
     return res.json({ skills, total: skills.length });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -99,7 +111,7 @@ router.get('/', (req: Request, res: Response) => {
 
 router.get('/:id', (req: Request, res: Response) => {
   try {
-    const skill = getSkill(req.params.id);
+    const skill = getSkill(getId(req));
     if (!skill) {
       return res.status(404).json({ error: 'Skill not found' });
     }
@@ -110,10 +122,15 @@ router.get('/:id', (req: Request, res: Response) => {
   }
 });
 
+function getName(req: Request): string {
+  const name = Array.isArray(req.params.name) ? req.params.name[0] : req.params.name;
+  return name ?? '';
+}
+
 router.get('/name/:name', (req: Request, res: Response) => {
   try {
     const version = typeof req.query.version === 'string' ? req.query.version : undefined;
-    const skill = getSkillByName(req.params.name, version);
+    const skill = getSkillByName(getName(req), version);
     if (!skill) {
       return res.status(404).json({ error: 'Skill not found' });
     }
@@ -126,7 +143,8 @@ router.get('/name/:name', (req: Request, res: Response) => {
 
 router.get('/:id/versions', (req: Request, res: Response) => {
   try {
-    const skill = getSkill(req.params.id);
+    const id = getId(req);
+    const skill = getSkill(id);
     if (!skill) {
       return res.status(404).json({ error: 'Skill not found' });
     }
@@ -146,7 +164,8 @@ router.patch('/:id', (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid request', details: parsed.error.flatten() });
     }
 
-    const skill = updateSkill(req.params.id, parsed.data);
+    const id = getId(req);
+    const skill = updateSkill(id, parsed.data as unknown as Partial<Skill>);
     if (!skill) {
       return res.status(404).json({ error: 'Skill not found' });
     }
@@ -160,7 +179,8 @@ router.patch('/:id', (req: Request, res: Response) => {
 
 router.post('/:id/toggle', (req: Request, res: Response) => {
   try {
-    const skill = toggleSkillActive(req.params.id);
+    const id = getId(req);
+    const skill = toggleSkillActive(id);
     if (!skill) {
       return res.status(404).json({ error: 'Skill not found' });
     }
@@ -173,11 +193,12 @@ router.post('/:id/toggle', (req: Request, res: Response) => {
 
 router.delete('/:id', (req: Request, res: Response) => {
   try {
-    const deleted = deleteSkill(req.params.id);
+    const id = getId(req);
+    const deleted = deleteSkill(id);
     if (!deleted) {
       return res.status(404).json({ error: 'Skill not found' });
     }
-    return res.json({ id: req.params.id, deleted: true });
+    return res.json({ id, deleted: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return res.status(500).json({ error: message });

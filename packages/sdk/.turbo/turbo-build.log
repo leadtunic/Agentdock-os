@@ -1,0 +1,4 @@
+
+> @agentdock/sdk@0.1.0 build /Users/giovaniricetto/Documents/agentdock-os/packages/sdk
+> tsc -p tsconfig.json
+

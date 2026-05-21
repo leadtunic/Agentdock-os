@@ -1,9 +1,15 @@
 import { Router, type Request, type Response } from 'express';
 import { z } from 'zod';
+import type { ExecutionStatus } from '../types.js';
 import { getSkill, listSkills } from '../services/skill-registry.js';
 import { executeSkill, getExecution, listExecutions, cancelExecution } from '../services/skill-executor.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getId(req: Request): string {
+  const id = Array.isArray(getId(req)) ? getId(req)[0] : getId(req);
+  return id ?? '';
+}
 
 const executeSkillSchema = z.object({
   skillId: z.string().optional(),
@@ -128,7 +134,7 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/:id', (req: Request, res: Response) => {
   try {
-    const execution = getExecution(req.params.id);
+    const execution = getExecution(getId(req));
     if (!execution) {
       return res.status(404).json({ error: 'Execution not found' });
     }
@@ -142,9 +148,13 @@ router.get('/:id', (req: Request, res: Response) => {
 router.get('/', (req: Request, res: Response) => {
   try {
     const skillId = typeof req.query.skillId === 'string' ? req.query.skillId : undefined;
-    const status = typeof req.query.status === 'string' ? req.query.status as Parameters<typeof listExecutions>[0] : undefined;
+    const status = typeof req.query.status === 'string' ? req.query.status as ExecutionStatus : undefined;
 
-    const executions = listExecutions({ skillId, status });
+    const filter: { skillId?: string; status?: ExecutionStatus } = {};
+    if (skillId !== undefined) filter.skillId = skillId;
+    if (status !== undefined) filter.status = status;
+
+    const executions = listExecutions(filter);
     return res.json({ executions, total: executions.length });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
@@ -154,7 +164,7 @@ router.get('/', (req: Request, res: Response) => {
 
 router.post('/:id/cancel', (req: Request, res: Response) => {
   try {
-    const execution = cancelExecution(req.params.id);
+    const execution = cancelExecution(getId(req));
     if (!execution) {
       return res.status(404).json({ error: 'Execution not found' });
     }

@@ -11,7 +11,12 @@ import {
   setRecording,
 } from '../services/session-manager.js';
 
-const router = Router();
+const router: Router = Router();
+
+function getSessionId(req: Request): string {
+  const id = Array.isArray(req.params.sessionId) ? req.params.sessionId[0] : req.params.sessionId;
+  return id ?? '';
+}
 
 const createSessionSchema = z.object({
   profileId: z.string().min(1).optional(),
@@ -72,7 +77,7 @@ router.get('/', (_req: Request, res: Response) => {
 
 router.get('/:id', (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.id);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -85,15 +90,15 @@ router.get('/:id', (req: Request, res: Response) => {
 
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.id);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
 
     await closeProfile(session.profileId);
-    updateSessionStatus(req.params.id, 'closed');
+    updateSessionStatus(getSessionId(req), 'closed');
 
-    return res.json({ id: req.params.id, status: 'closed' });
+    return res.json({ id: getSessionId(req), status: 'closed' });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return res.status(500).json({ error: message });
@@ -102,7 +107,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
 
 router.post('/:id/record', async (req: Request, res: Response) => {
   try {
-    const session = getSession(req.params.id);
+    const session = getSession(getSessionId(req));
     if (!session) {
       return res.status(404).json({ error: 'Session not found' });
     }
@@ -110,9 +115,9 @@ router.post('/:id/record', async (req: Request, res: Response) => {
     const start = req.body.start ?? true;
     const videoPath = req.body.videoPath;
 
-    setRecording(req.params.id, start, videoPath);
+    setRecording(getSessionId(req), start, videoPath);
 
-    return res.json({ id: req.params.id, recording: start, videoPath });
+    return res.json({ id: getSessionId(req), recording: start, videoPath });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return res.status(500).json({ error: message });

@@ -1,0 +1,4 @@
+
+> @agentdock/sandbox-runner@0.1.0 build /Users/giovaniricetto/Documents/agentdock-os/services/sandbox-runner
+> tsc -p tsconfig.json
+

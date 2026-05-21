@@ -3,7 +3,7 @@ import { config } from '../config.js';
 import { getSkillCount, getActiveSkillCount } from '../services/skill-registry.js';
 import { getExecutionCount, getActiveExecutionCount } from '../services/skill-executor.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', (_req: Request, res: Response) => {
   res.json({
