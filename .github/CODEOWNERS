@@ -1,0 +1,13 @@
+* @agentdock/maintainers
+/docs/ @agentdock/docs
+*.md @agentdock/docs
+/apps/web/ @agentdock/frontend
+/packages/ui/ @agentdock/frontend
+/packages/toolbar/ @agentdock/frontend
+/services/api/ @agentdock/backend
+/services/agent-runtime/ @agentdock/agent-runtime
+/services/browser-runtime/ @agentdock/browser-runtime
+/services/sandbox-runner/ @agentdock/security
+/infra/ @agentdock/infra
+docker-compose.yml @agentdock/infra
+dokploy-compose.yml @agentdock/infra

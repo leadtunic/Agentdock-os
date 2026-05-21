@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a new capability for AgentDock OS
+title: "feat: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Dashboard
+        - API
+        - Agent Runtime
+        - Browser Runtime
+        - Visual Toolbar
+        - Memory Engine
+        - Skills Engine
+        - MCP Hub
+        - Message Gateway
+        - Plugin SDK
+        - Governance
+        - Security
+        - Deployment
+        - Documentation
+        - Other
+    validations:
+      required: true

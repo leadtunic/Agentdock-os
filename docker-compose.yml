@@ -1,0 +1,122 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    env_file: .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - agentdock
+
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - agentdock_storage:/data/storage
+    networks:
+      - agentdock
+
+  agent-runtime:
+    build:
+      context: .
+      dockerfile: services/agent-runtime/Dockerfile
+    env_file: .env
+    ports:
+      - "8020:8020"
+    depends_on:
+      - api
+      - redis
+    volumes:
+      - agentdock_workspaces:/data/workspaces
+    networks:
+      - agentdock
+
+  browser-runtime:
+    build:
+      context: .
+      dockerfile: services/browser-runtime/Dockerfile
+    env_file: .env
+    ports:
+      - "8010:8010"
+    depends_on:
+      - api
+      - redis
+    volumes:
+      - agentdock_browser:/data/browser
+    networks:
+      - agentdock
+
+  gateway:
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    env_file: .env
+    ports:
+      - "8030:8030"
+    depends_on:
+      - api
+      - redis
+    networks:
+      - agentdock
+
+  worker:
+    build:
+      context: .
+      dockerfile: services/worker/Dockerfile
+    env_file: .env
+    depends_on:
+      - api
+      - redis
+      - postgres
+    networks:
+      - agentdock
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: agentdock
+      POSTGRES_PASSWORD: agentdock
+      POSTGRES_DB: agentdock
+    ports:
+      - "5432:5432"
+    volumes:
+      - agentdock_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentdock"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - agentdock
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - agentdock_redis:/data
+    networks:
+      - agentdock
+
+volumes:
+  agentdock_postgres:
+  agentdock_redis:
+  agentdock_storage:
+  agentdock_workspaces:
+  agentdock_browser:
+
+networks:
+  agentdock:
+    driver: bridge

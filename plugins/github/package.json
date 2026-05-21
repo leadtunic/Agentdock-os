@@ -1,0 +1,12 @@
+{
+  "name": "@agentdock/plugin-github",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo plugin build placeholder",
+    "lint": "echo plugin lint placeholder",
+    "typecheck": "echo plugin typecheck placeholder",
+    "test": "echo plugin test placeholder"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-gitlab",
+  "version": "0.1.0",
+  "type": "tool_plugin",
+  "permissions": [
+    "gitlab.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

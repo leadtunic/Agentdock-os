@@ -1,0 +1,13 @@
+http:
+  routers:
+    agentdock-web:
+      rule: "Host(`agentdock.example.com`)"
+      service: agentdock-web
+      entryPoints: ["websecure"]
+      tls:
+        certResolver: letsencrypt
+  services:
+    agentdock-web:
+      loadBalancer:
+        servers:
+          - url: "http://web:3000"

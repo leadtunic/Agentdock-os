@@ -1,0 +1,7 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#121210"/>
+  <rect x="72" y="72" width="1056" height="486" rx="40" fill="#1c1b18" stroke="#34312b"/>
+  <text x="120" y="210" fill="#f4f3ef" font-size="72" font-family="Arial" font-weight="700">AgentDock OS</text>
+  <text x="120" y="290" fill="#b7ae8f" font-size="34" font-family="Arial">Open source operating system for governed AI agents</text>
+  <text x="120" y="380" fill="#d9d9db" font-size="28" font-family="Arial">Visual Coding • Browser Automation • Git • MCP • Memory • Skills • Governance</text>
+</svg>

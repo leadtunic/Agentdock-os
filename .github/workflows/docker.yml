@@ -1,0 +1,17 @@
+name: Docker
+
+on:
+  pull_request:
+    paths:
+      - "docker-compose.yml"
+      - "dokploy-compose.yml"
+      - "infra/**"
+      - ".github/workflows/docker.yml"
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config
+      - run: docker compose build

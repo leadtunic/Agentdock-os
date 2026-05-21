@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-shell",
+  "version": "0.1.0",
+  "type": "tool_plugin",
+  "permissions": [
+    "shell.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

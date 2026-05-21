@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-database",
+  "version": "0.1.0",
+  "type": "tool_plugin",
+  "permissions": [
+    "database.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

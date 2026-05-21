@@ -1,0 +1,51 @@
+
+> @agentdock/web@0.1.0 build /Users/giovaniricetto/Documents/agentdock-os/apps/web
+> next build
+
+   ▲ Next.js 15.5.18
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 3.0s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/15) ...
+   Generating static pages (3/15) 
+   Generating static pages (7/15) 
+   Generating static pages (11/15) 
+ ✓ Generating static pages (15/15)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      129 B         102 kB
+├ ○ /_not-found                            997 B         103 kB
+├ ○ /admin/roles                         3.52 kB         134 kB
+├ ○ /admin/users                         3.53 kB         134 kB
+├ ○ /approvals                           2.69 kB         111 kB
+├ ○ /audit                               2.81 kB         112 kB
+├ ○ /costs                               3.61 kB         112 kB
+├ ○ /dashboard                             162 B         105 kB
+├ ○ /login                               2.45 kB         133 kB
+├ ○ /organizations                       3.52 kB         134 kB
+├ ○ /plugins                             2.77 kB         111 kB
+├ ○ /projects                             3.6 kB         138 kB
+├ ƒ /projects/[id]/agents                4.61 kB         136 kB
+├ ƒ /projects/[id]/browser                 129 B         102 kB
+├ ƒ /projects/[id]/mcp                    3.1 kB         112 kB
+├ ƒ /projects/[id]/memory                2.58 kB         111 kB
+├ ƒ /projects/[id]/overview                162 B         105 kB
+├ ƒ /projects/[id]/repositories          3.21 kB         112 kB
+├ ƒ /projects/[id]/sessions                129 B         102 kB
+├ ƒ /projects/[id]/settings              3.51 kB         112 kB
+├ ƒ /projects/[id]/skills                3.26 kB         112 kB
+├ ƒ /projects/[id]/tasks                 4.75 kB         136 kB
+└ ○ /providers                           4.59 kB         136 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/1403cfaa-6db8521358bcd91a.js  54.2 kB
+  ├ chunks/159-2398f495578bc26c.js       45.8 kB
+  └ other shared chunks (total)          1.92 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

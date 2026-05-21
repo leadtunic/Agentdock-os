@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-filesystem",
+  "version": "0.1.0",
+  "type": "tool_plugin",
+  "permissions": [
+    "filesystem.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

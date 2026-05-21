@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-github",
+  "version": "0.1.0",
+  "type": "tool_plugin",
+  "permissions": [
+    "github.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

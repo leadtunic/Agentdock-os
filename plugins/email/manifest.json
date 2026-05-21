@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-email",
+  "version": "0.1.0",
+  "type": "channel_plugin",
+  "permissions": [
+    "email.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

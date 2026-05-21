@@ -1,0 +1,93 @@
+services:
+  web:
+    image: ghcr.io/agentdock/agentdock-web:latest
+    env_file: .env
+    depends_on:
+      - api
+    networks:
+      - dokploy-network
+      - agentdock-internal
+
+  api:
+    image: ghcr.io/agentdock/agentdock-api:latest
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - agentdock_storage:/data/storage
+    networks:
+      - dokploy-network
+      - agentdock-internal
+
+  agent-runtime:
+    image: ghcr.io/agentdock/agentdock-agent-runtime:latest
+    env_file: .env
+    depends_on:
+      - api
+      - redis
+    volumes:
+      - agentdock_workspaces:/data/workspaces
+    networks:
+      - agentdock-internal
+
+  browser-runtime:
+    image: ghcr.io/agentdock/agentdock-browser-runtime:latest
+    env_file: .env
+    depends_on:
+      - api
+      - redis
+    volumes:
+      - agentdock_browser:/data/browser
+    networks:
+      - agentdock-internal
+
+  gateway:
+    image: ghcr.io/agentdock/agentdock-gateway:latest
+    env_file: .env
+    depends_on:
+      - api
+      - redis
+    networks:
+      - agentdock-internal
+
+  worker:
+    image: ghcr.io/agentdock/agentdock-worker:latest
+    env_file: .env
+    depends_on:
+      - api
+      - postgres
+      - redis
+    networks:
+      - agentdock-internal
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: agentdock
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: agentdock
+    volumes:
+      - agentdock_postgres:/var/lib/postgresql/data
+    networks:
+      - agentdock-internal
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - agentdock_redis:/data
+    networks:
+      - agentdock-internal
+
+volumes:
+  agentdock_postgres:
+  agentdock_redis:
+  agentdock_storage:
+  agentdock_workspaces:
+  agentdock_browser:
+
+networks:
+  dokploy-network:
+    external: true
+  agentdock-internal:
+    driver: bridge

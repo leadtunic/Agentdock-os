@@ -1,0 +1,4 @@
+
+> @agentdock/protocol@0.1.0 build /Users/giovaniricetto/Documents/agentdock-os/packages/protocol
+> tsc -p tsconfig.json
+

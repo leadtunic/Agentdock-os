@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-telegram",
+  "version": "0.1.0",
+  "type": "channel_plugin",
+  "permissions": [
+    "telegram.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

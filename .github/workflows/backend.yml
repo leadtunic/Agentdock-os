@@ -1,0 +1,38 @@
+name: Backend
+
+on:
+  pull_request:
+    paths:
+      - "services/api/**"
+      - "pyproject.toml"
+      - ".github/workflows/backend.yml"
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: agentdock
+          POSTGRES_PASSWORD: agentdock
+          POSTGRES_DB: agentdock_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: pip install -r services/api/requirements-dev.txt
+      - run: ruff check services/api
+      - run: ruff format --check services/api
+      - run: pytest services/api/tests

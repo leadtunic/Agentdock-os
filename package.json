@@ -1,0 +1,27 @@
+{
+  "name": "agentdock-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open source self-hosted OS for governed AI agents: visual coding, browser automation, Git workflows, MCP hub, memory, skills, quality gates and audit logs.",
+  "license": "AGPL-3.0-only",
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "format": "prettier --write .",
+    "doctor": "bash scripts/doctor.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

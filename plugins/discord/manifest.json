@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-discord",
+  "version": "0.1.0",
+  "type": "channel_plugin",
+  "permissions": [
+    "discord.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}

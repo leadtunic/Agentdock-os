@@ -1,0 +1,9 @@
+{
+  "name": "agentdock-plugin-browser",
+  "version": "0.1.0",
+  "type": "tool_plugin",
+  "permissions": [
+    "browser.read"
+  ],
+  "entrypoint": "./dist/index.js"
+}
