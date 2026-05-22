@@ -65,6 +65,13 @@ const audiences = [
   'Organizations that require approvals, logs and cost visibility',
 ];
 
+const principles = [
+  'Governance by default',
+  'Audit every sensitive action',
+  'Provider-agnostic by design',
+  'Self-hosted infrastructure ownership',
+];
+
 export default function DocsHome() {
   return (
     <main
@@ -87,6 +94,7 @@ export default function DocsHome() {
       `}</style>
       <section
         style={{
+          position: 'relative',
           maxWidth: 1280,
           margin: '0 auto',
           border: '1px solid rgba(55,65,81,0.8)',
@@ -112,6 +120,44 @@ export default function DocsHome() {
             <div>
               <div style={{ color: '#b7ae8f', fontSize: 14, letterSpacing: 1.4, textTransform: 'uppercase' }}>AgentDock OS</div>
               <div style={{ color: '#f4f3ef', fontSize: 20, fontWeight: 700 }}>Open source operating system for governed AI agents</div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 10,
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 26,
+              padding: '12px 16px',
+              borderRadius: 18,
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid rgba(255,255,255,0.05)',
+            }}
+          >
+            <div style={{ color: '#cfc9bb', fontSize: 14, lineHeight: 1.7, maxWidth: 760 }}>
+              A platform for teams that need agents to act across code, browser, Git, MCP and channels with governance, approvals and auditability.
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {principles.map((principle) => (
+                <span
+                  key={principle}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: 999,
+                    border: '1px solid rgba(183,174,143,0.18)',
+                    color: '#e7e5df',
+                    background: 'rgba(255,255,255,0.03)',
+                    fontSize: 12,
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.9,
+                  }}
+                >
+                  {principle}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -270,6 +316,22 @@ export default function DocsHome() {
             ))}
           </div>
 
+          <div
+            style={{
+              marginTop: 18,
+              padding: 28,
+              borderRadius: 24,
+              background: 'linear-gradient(135deg, rgba(183,174,143,0.08), rgba(124,58,237,0.06))',
+              border: '1px solid rgba(255,255,255,0.06)',
+            }}
+          >
+            <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase' }}>Why now</div>
+            <h2 style={{ margin: '10px 0 0', fontSize: 30 }}>Agents are becoming operational systems, not just prompts.</h2>
+            <p style={{ marginTop: 14, color: '#d6d3c7', lineHeight: 1.8, maxWidth: 900 }}>
+              AgentDock OS brings governance, runtime boundaries and a public product structure to a category that is usually assembled from disconnected scripts, workflows and one-off integrations.
+            </p>
+          </div>
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 18, marginTop: 18 }}>
             <section
               style={{
@@ -376,6 +438,47 @@ export default function DocsHome() {
                 ))}
               </div>
             </section>
+          </div>
+
+          <div
+            style={{
+              marginTop: 18,
+              padding: 30,
+              borderRadius: 26,
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.06)',
+              backdropFilter: 'blur(12px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 20,
+              flexWrap: 'wrap',
+            }}
+          >
+            <div>
+              <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase' }}>Ready to explore</div>
+              <h2 style={{ margin: '10px 0 0', fontSize: 28 }}>A complete platform, ready for real agent operations.</h2>
+              <p style={{ margin: '10px 0 0', color: '#d6d3c7', lineHeight: 1.7 }}>
+                Start with the dashboard, read the architecture, or use the quickstart to run the stack locally.
+              </p>
+            </div>
+            <a
+              href="/getting-started"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: 180,
+                padding: '14px 22px',
+                borderRadius: 14,
+                background: '#f4f3ef',
+                color: '#111111',
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              Open the quickstart
+            </a>
           </div>
         </div>
       </section>
