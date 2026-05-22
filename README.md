@@ -1,5 +1,13 @@
 <p align="center">
+  <img src="./apps/docs/public/agentdock-logo.svg" alt="AgentDock OS logo" width="112" />
+</p>
+
+<p align="center">
   <img src="./apps/docs/public/agentdock-hero.svg" alt="AgentDock OS hero" />
+</p>
+
+<p align="center">
+  <img src="./apps/docs/public/agentdock-presentation.svg" alt="AgentDock OS presentation" />
 </p>
 
 <h1 align="center">AgentDock OS</h1>

@@ -1,0 +1,58 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1400" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b0d12"/>
+      <stop offset="1" stop-color="#101620"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="120" y1="110" x2="1280" y2="790" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1b1f28"/>
+      <stop offset="1" stop-color="#12161e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="240" y1="120" x2="1160" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b7ae8f" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#7c3aed" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1400" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="28" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="1400" height="900" fill="url(#bg)"/>
+  <circle cx="1180" cy="140" r="170" fill="#7c3aed" fill-opacity="0.08"/>
+  <circle cx="220" cy="780" r="180" fill="#b7ae8f" fill-opacity="0.08"/>
+  <rect x="96" y="96" width="1208" height="708" rx="44" fill="url(#panel)" stroke="#2f3440" filter="url(#shadow)"/>
+  <rect x="96" y="96" width="1208" height="708" rx="44" stroke="url(#accent)" stroke-opacity="0.3"/>
+  <g transform="translate(180 176)">
+    <rect x="0" y="0" width="128" height="128" rx="32" fill="#121210" stroke="#b7ae8f" stroke-width="6"/>
+    <path d="M26 64C26 51.8497 35.8497 42 48 42H80C92.1503 42 102 51.8497 102 64V76C102 88.1503 92.1503 98 80 98H48C35.8497 98 26 88.1503 26 76V64Z" fill="#1c1b18" stroke="#d9d9db" stroke-width="5"/>
+    <circle cx="52" cy="68" r="5" fill="#b7ae8f"/>
+    <circle cx="76" cy="68" r="5" fill="#b7ae8f"/>
+    <path d="M56 82H72" stroke="#d9d9db" stroke-width="4" stroke-linecap="round"/>
+    <path d="M64 30V42" stroke="#b7ae8f" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <text x="360" y="250" fill="#f5f3ef" font-size="76" font-family="Arial, Helvetica, sans-serif" font-weight="700">AgentDock OS</text>
+  <text x="360" y="322" fill="#c9c1a7" font-size="36" font-family="Arial, Helvetica, sans-serif">Open source operating system for governed AI agents</text>
+  <text x="180" y="430" fill="#e5e7eb" font-size="32" font-family="Arial, Helvetica, sans-serif">Visual Coding • Browser Automation • Git • MCP • Memory • Skills • Governance</text>
+  <rect x="180" y="486" width="1040" height="1.5" fill="#323844"/>
+  <g transform="translate(180 540)">
+    <rect x="0" y="0" width="240" height="120" rx="24" fill="#151923" stroke="#2e3440"/>
+    <text x="24" y="42" fill="#b7ae8f" font-size="18" font-family="Arial, Helvetica, sans-serif">Governance-first</text>
+    <text x="24" y="84" fill="#f4f3ef" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700">Approvals</text>
+    <text x="24" y="104" fill="#d1d5db" font-size="18" font-family="Arial, Helvetica, sans-serif">Policies, audit and control</text>
+
+    <rect x="272" y="0" width="240" height="120" rx="24" fill="#151923" stroke="#2e3440"/>
+    <text x="296" y="42" fill="#b7ae8f" font-size="18" font-family="Arial, Helvetica, sans-serif">Execution layer</text>
+    <text x="296" y="84" fill="#f4f3ef" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700">Browser + Git</text>
+    <text x="296" y="104" fill="#d1d5db" font-size="18" font-family="Arial, Helvetica, sans-serif">Real actions, isolated workspaces</text>
+
+    <rect x="544" y="0" width="240" height="120" rx="24" fill="#151923" stroke="#2e3440"/>
+    <text x="568" y="42" fill="#b7ae8f" font-size="18" font-family="Arial, Helvetica, sans-serif">Knowledge layer</text>
+    <text x="568" y="84" fill="#f4f3ef" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700">Memory + Skills</text>
+    <text x="568" y="104" fill="#d1d5db" font-size="18" font-family="Arial, Helvetica, sans-serif">Reusable context and procedures</text>
+
+    <rect x="816" y="0" width="240" height="120" rx="24" fill="#151923" stroke="#2e3440"/>
+    <text x="840" y="42" fill="#b7ae8f" font-size="18" font-family="Arial, Helvetica, sans-serif">Delivery layer</text>
+    <text x="840" y="84" fill="#f4f3ef" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700">MCP + Channels</text>
+    <text x="840" y="104" fill="#d1d5db" font-size="18" font-family="Arial, Helvetica, sans-serif">WebChat, Slack, Telegram, Discord</text>
+  </g>
+  <text x="180" y="742" fill="#9ca3af" font-size="22" font-family="Arial, Helvetica, sans-serif">Self-hosted. Auditable. Provider-agnostic. Built for real operational use.</text>
+</svg>
