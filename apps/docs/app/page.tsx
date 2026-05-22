@@ -33,9 +33,23 @@ const docs = [
   { href: '/plugin-sdk/overview', label: 'Plugin SDK' },
 ];
 
+const metrics = [
+  { value: '20+', label: 'product modules' },
+  { value: '7', label: 'provider options' },
+  { value: '11', label: 'agent roles' },
+  { value: '1', label: 'self-hosted platform' },
+];
+
 export default function DocsHome() {
   return (
-    <main style={{ minHeight: '100vh', padding: '32px 20px 56px' }}>
+    <main
+      style={{
+        minHeight: '100vh',
+        padding: '32px 20px 56px',
+        background:
+          'radial-gradient(circle at top left, rgba(183,174,143,0.12), transparent 28%), radial-gradient(circle at top right, rgba(124,58,237,0.12), transparent 24%), linear-gradient(180deg, #0b0d12 0%, #090b0f 100%)',
+      }}
+    >
       <section
         style={{
           maxWidth: 1280,
@@ -90,6 +104,32 @@ export default function DocsHome() {
                 ))}
               </div>
 
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+                  gap: 12,
+                  marginTop: 34,
+                }}
+              >
+                {metrics.map((metric) => (
+                  <div
+                    key={metric.label}
+                    style={{
+                      padding: '16px 18px',
+                      borderRadius: 20,
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    <div style={{ fontSize: 30, fontWeight: 800, color: '#f4f3ef' }}>{metric.value}</div>
+                    <div style={{ fontSize: 13, color: '#b7ae8f', marginTop: 4, textTransform: 'uppercase', letterSpacing: 1 }}>
+                      {metric.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 34 }}>
                 <a
                   href="/getting-started"
@@ -134,7 +174,9 @@ export default function DocsHome() {
                   borderRadius: 28,
                   overflow: 'hidden',
                   border: '1px solid rgba(255,255,255,0.08)',
-                  background: 'rgba(255,255,255,0.02)',
+                  background:
+                    'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
                 }}
               >
                 <img src="/agentdock-presentation.svg" alt="AgentDock OS presentation" style={{ width: '100%', display: 'block' }} />
@@ -158,7 +200,7 @@ export default function DocsHome() {
         </div>
 
         <div style={{ marginTop: 44, padding: '0 clamp(24px, 4vw, 64px) 44px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 18 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 18 }}>
             {features.map((feature) => (
               <article
                 key={feature.title}
@@ -168,6 +210,7 @@ export default function DocsHome() {
                   background: 'rgba(255,255,255,0.03)',
                   border: '1px solid rgba(255,255,255,0.06)',
                   minHeight: 180,
+                  backdropFilter: 'blur(12px)',
                 }}
               >
                 <h2 style={{ margin: 0, fontSize: 24 }}>{feature.title}</h2>
@@ -176,13 +219,14 @@ export default function DocsHome() {
             ))}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginTop: 18 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 18, marginTop: 18 }}>
             <section
               style={{
                 padding: 28,
                 borderRadius: 24,
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(12px)',
               }}
             >
               <h2 style={{ margin: 0, fontSize: 28 }}>Why teams choose it</h2>
@@ -197,6 +241,7 @@ export default function DocsHome() {
                 borderRadius: 24,
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(12px)',
               }}
             >
               <h2 style={{ margin: 0, fontSize: 28 }}>Explore the docs</h2>
