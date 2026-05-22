@@ -61,3 +61,18 @@ v0.8.0 MCP Hub
 v0.9.0 Message Gateway
 v1.0.0 Production Ready Self-hosted Release
 ```
+
+## Positioning note
+
+AgentDock OS is intentionally broader than narrow agent runtimes or single-purpose orchestration tools. It combines:
+
+- governed execution
+- browser automation
+- Git workspaces
+- memory and skills
+- MCP tool routing
+- message channels
+- approvals and auditability
+- cost tracking and provider abstraction
+
+This makes it easier for teams to adopt one platform for the full lifecycle of agentic work instead of assembling separate tools for each concern.

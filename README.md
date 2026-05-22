@@ -43,6 +43,35 @@ AgentDock OS provides that operational layer.
 - Cost tracking per agent, project and provider.
 - Modular services that can evolve independently.
 
+## Positioning vs alternatives
+
+AgentDock OS is designed as a full operating system for governed agents, not only as a runtime, workflow engine or orchestration layer.
+
+| Capability | AgentDock OS | Typical Hermes/OpenClaw-style tool |
+|---|---|---|
+| Web dashboard | Yes, productized | Often minimal or external |
+| Agent governance | Policy-first, per agent/project | Usually partial or workflow-scoped |
+| Approval engine | Native and explicit | Frequently custom-built |
+| Audit log | Central and mandatory | Often fragmented |
+| Cost tracking | Built in | Often absent or external |
+| Browser runtime | Dedicated service with isolation | Usually not first-class |
+| Git workspace | Worktree/branch-based, not mainline | Often ad hoc scripting |
+| Memory engine | Persistent, scoped memory model | Usually limited context only |
+| Skills engine | Versioned reusable procedures | Usually prompt templates |
+| MCP Hub | Scoped tool permissions per agent | Often registry-level only |
+| Message gateway | Multi-channel by design | Often not included |
+| Deployment | Docker Compose + Dokploy | Varies by project |
+
+Why that matters:
+
+- You get a single control plane instead of a collection of disconnected automations.
+- Sensitive actions can be approved, audited and reproduced.
+- Teams can operate multiple agents with different permissions and budgets.
+- The product is structured for public OSS adoption, not just internal experimentation.
+- Browser, Git, MCP, memory, skills and governance are treated as first-class modules, not plugins glued on later.
+
+In short: if you need a governed agent platform with real operational boundaries, AgentDock OS is the more complete foundation.
+
 ## What ships in this repository
 
 | Layer | Included modules |
