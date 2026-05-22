@@ -72,6 +72,21 @@ const principles = [
   'Self-hosted infrastructure ownership',
 ];
 
+const pillars = [
+  {
+    title: 'Control plane',
+    points: ['Organizations', 'Projects', 'Agents', 'RBAC', 'Approvals', 'Audit logs'],
+  },
+  {
+    title: 'Execution plane',
+    points: ['Agent runtime', 'Browser runtime', 'Gateway', 'Worker', 'Sandbox runner', 'Git workspace'],
+  },
+  {
+    title: 'Knowledge plane',
+    points: ['Memory engine', 'Skills engine', 'MCP Hub', 'Provider layer', 'Quality gates', 'Cost tracking'],
+  },
+];
+
 export default function DocsHome() {
   return (
     <main
@@ -91,6 +106,10 @@ export default function DocsHome() {
           0% { background-position: 0% 50%; }
           100% { background-position: 100% 50%; }
         }
+        @keyframes drift {
+          0%, 100% { transform: translate3d(0, 0, 0); }
+          50% { transform: translate3d(0, -8px, 0); }
+        }
       `}</style>
       <section
         style={{
@@ -103,7 +122,7 @@ export default function DocsHome() {
           boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
           overflow: 'hidden',
         }}
-        >
+      >
         <div
           style={{
             position: 'absolute',
@@ -114,7 +133,8 @@ export default function DocsHome() {
             animation: 'floatGlow 8s ease-in-out infinite',
           }}
         />
-        <div style={{ padding: '40px clamp(24px, 4vw, 64px) 0' }}>
+
+        <div style={{ padding: '40px clamp(24px, 4vw, 64px) 0', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
             <img src="/agentdock-logo.svg" alt="AgentDock OS logo" width={72} height={72} style={{ borderRadius: 20 }} />
             <div>
@@ -273,6 +293,7 @@ export default function DocsHome() {
                   background:
                     'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
                   boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+                  animation: 'drift 7s ease-in-out infinite',
                 }}
               >
                 <img src="/agentdock-presentation.svg" alt="AgentDock OS presentation" style={{ width: '100%', display: 'block' }} />
@@ -295,7 +316,7 @@ export default function DocsHome() {
           </div>
         </div>
 
-        <div style={{ marginTop: 44, padding: '0 clamp(24px, 4vw, 64px) 44px' }}>
+        <div style={{ marginTop: 44, padding: '0 clamp(24px, 4vw, 64px) 44px', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 18 }}>
             {features.map((feature) => (
               <article
@@ -313,6 +334,39 @@ export default function DocsHome() {
                 <h2 style={{ margin: 0, fontSize: 24 }}>{feature.title}</h2>
                 <p style={{ marginTop: 14, color: '#cfc9bb', lineHeight: 1.65 }}>{feature.description}</p>
               </article>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 18, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
+            {pillars.map((pillar) => (
+              <section
+                key={pillar.title}
+                style={{
+                  padding: 24,
+                  borderRadius: 24,
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(12px)',
+                }}
+              >
+                <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase' }}>{pillar.title}</div>
+                <div style={{ display: 'grid', gap: 10, marginTop: 14 }}>
+                  {pillar.points.map((point) => (
+                    <div
+                      key={point}
+                      style={{
+                        padding: '12px 14px',
+                        borderRadius: 14,
+                        background: 'rgba(255,255,255,0.02)',
+                        border: '1px solid rgba(255,255,255,0.06)',
+                        color: '#f4f3ef',
+                      }}
+                    >
+                      {point}
+                    </div>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
 
@@ -341,12 +395,12 @@ export default function DocsHome() {
                 border: '1px solid rgba(255,255,255,0.06)',
                 backdropFilter: 'blur(12px)',
               }}
-              >
-                <h2 style={{ margin: 0, fontSize: 28 }}>Why teams choose it</h2>
-                <p style={{ color: '#d6d3c7', lineHeight: 1.8, marginTop: 16 }}>
-                  AgentDock OS is built for teams that need agents to do operational work with traceability, approvals and scoped permissions, while keeping the deployment self-hosted and adaptable.
-                </p>
-              </section>
+            >
+              <h2 style={{ margin: 0, fontSize: 28 }}>Why teams choose it</h2>
+              <p style={{ color: '#d6d3c7', lineHeight: 1.8, marginTop: 16 }}>
+                AgentDock OS is built for teams that need agents to do operational work with traceability, approvals and scoped permissions, while keeping the deployment self-hosted and adaptable.
+              </p>
+            </section>
 
             <section
               style={{
@@ -356,10 +410,10 @@ export default function DocsHome() {
                 border: '1px solid rgba(255,255,255,0.06)',
                 backdropFilter: 'blur(12px)',
               }}
-              >
-                <h2 style={{ margin: 0, fontSize: 28 }}>Explore the docs</h2>
-                <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
-                  {docs.map((doc) => (
+            >
+              <h2 style={{ margin: 0, fontSize: 28 }}>Explore the docs</h2>
+              <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
+                {docs.map((doc) => (
                   <a
                     key={doc.href}
                     href={doc.href}
@@ -374,9 +428,9 @@ export default function DocsHome() {
                   >
                     {doc.label}
                   </a>
-                  ))}
-                </div>
-              </section>
+                ))}
+              </div>
+            </section>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 18, marginTop: 18 }}>
@@ -434,6 +488,40 @@ export default function DocsHome() {
                     }}
                   >
                     {audience}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section
+              style={{
+                padding: 28,
+                borderRadius: 24,
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(12px)',
+              }}
+            >
+              <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase' }}>Stack view</div>
+              <h2 style={{ margin: '10px 0 0', fontSize: 28 }}>One platform, many surfaces</h2>
+              <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
+                {[
+                  'Web dashboard for teams and admins',
+                  'CLI for local operations and automation',
+                  'Toolbar for visual context capture',
+                  'APIs and runtimes for programmatic execution',
+                ].map((item) => (
+                  <div
+                    key={item}
+                    style={{
+                      padding: '14px 16px',
+                      borderRadius: 16,
+                      background: 'rgba(255,255,255,0.02)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      color: '#f4f3ef',
+                    }}
+                  >
+                    {item}
                   </div>
                 ))}
               </div>
