@@ -40,6 +40,31 @@ const metrics = [
   { value: '1', label: 'self-hosted platform' },
 ];
 
+const story = [
+  {
+    step: '01',
+    title: 'Define the boundary',
+    description: 'Create organizations, projects, providers and governed agents with explicit permissions and budgets.',
+  },
+  {
+    step: '02',
+    title: 'Execute with control',
+    description: 'Route tasks into browser, Git, MCP and sandboxed execution with approvals before sensitive actions.',
+  },
+  {
+    step: '03',
+    title: 'Learn and improve',
+    description: 'Persist memory, version skills, inspect audit trails and refine quality gates as the platform scales.',
+  },
+];
+
+const audiences = [
+  'Platform teams standardizing AI operations',
+  'Developer teams shipping UI and backend changes',
+  'Open source maintainers with self-hosted needs',
+  'Organizations that require approvals, logs and cost visibility',
+];
+
 export default function DocsHome() {
   return (
     <main
@@ -50,6 +75,16 @@ export default function DocsHome() {
           'radial-gradient(circle at top left, rgba(183,174,143,0.12), transparent 28%), radial-gradient(circle at top right, rgba(124,58,237,0.12), transparent 24%), linear-gradient(180deg, #0b0d12 0%, #090b0f 100%)',
       }}
     >
+      <style jsx global>{`
+        @keyframes floatGlow {
+          0%, 100% { transform: translateY(0px) scale(1); opacity: 0.72; }
+          50% { transform: translateY(-10px) scale(1.03); opacity: 1; }
+        }
+        @keyframes sheen {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 100% 50%; }
+        }
+      `}</style>
       <section
         style={{
           maxWidth: 1280,
@@ -60,7 +95,17 @@ export default function DocsHome() {
           boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
           overflow: 'hidden',
         }}
-      >
+        >
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            background:
+              'radial-gradient(circle at 20% 10%, rgba(183,174,143,0.12), transparent 22%), radial-gradient(circle at 80% 15%, rgba(124,58,237,0.15), transparent 20%)',
+            animation: 'floatGlow 8s ease-in-out infinite',
+          }}
+        />
         <div style={{ padding: '40px clamp(24px, 4vw, 64px) 0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
             <img src="/agentdock-logo.svg" alt="AgentDock OS logo" width={72} height={72} style={{ borderRadius: 20 }} />
@@ -140,10 +185,14 @@ export default function DocsHome() {
                     minWidth: 160,
                     padding: '14px 20px',
                     borderRadius: 14,
-                    background: '#b7ae8f',
+                    background: 'linear-gradient(120deg, #b7ae8f 0%, #d3c8a1 50%, #b7ae8f 100%)',
+                    backgroundSize: '200% 100%',
+                    animation: 'sheen 6s linear infinite',
                     color: '#111111',
                     fontWeight: 700,
                     textDecoration: 'none',
+                    boxShadow: '0 12px 30px rgba(183,174,143,0.18)',
+                    transition: 'transform 180ms ease, box-shadow 180ms ease',
                   }}
                 >
                   Get started
@@ -161,6 +210,7 @@ export default function DocsHome() {
                     color: '#f4f3ef',
                     textDecoration: 'none',
                     background: 'rgba(255,255,255,0.02)',
+                    transition: 'transform 180ms ease, border-color 180ms ease, background 180ms ease',
                   }}
                 >
                   Read architecture
@@ -211,6 +261,7 @@ export default function DocsHome() {
                   border: '1px solid rgba(255,255,255,0.06)',
                   minHeight: 180,
                   backdropFilter: 'blur(12px)',
+                  transition: 'transform 180ms ease, border-color 180ms ease, background 180ms ease',
                 }}
               >
                 <h2 style={{ margin: 0, fontSize: 24 }}>{feature.title}</h2>
@@ -228,12 +279,12 @@ export default function DocsHome() {
                 border: '1px solid rgba(255,255,255,0.06)',
                 backdropFilter: 'blur(12px)',
               }}
-            >
-              <h2 style={{ margin: 0, fontSize: 28 }}>Why teams choose it</h2>
-              <p style={{ color: '#d6d3c7', lineHeight: 1.8, marginTop: 16 }}>
-                AgentDock OS is built for teams that need agents to do operational work with traceability, approvals and scoped permissions, while keeping the deployment self-hosted and adaptable.
-              </p>
-            </section>
+              >
+                <h2 style={{ margin: 0, fontSize: 28 }}>Why teams choose it</h2>
+                <p style={{ color: '#d6d3c7', lineHeight: 1.8, marginTop: 16 }}>
+                  AgentDock OS is built for teams that need agents to do operational work with traceability, approvals and scoped permissions, while keeping the deployment self-hosted and adaptable.
+                </p>
+              </section>
 
             <section
               style={{
@@ -243,10 +294,10 @@ export default function DocsHome() {
                 border: '1px solid rgba(255,255,255,0.06)',
                 backdropFilter: 'blur(12px)',
               }}
-            >
-              <h2 style={{ margin: 0, fontSize: 28 }}>Explore the docs</h2>
-              <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
-                {docs.map((doc) => (
+              >
+                <h2 style={{ margin: 0, fontSize: 28 }}>Explore the docs</h2>
+                <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
+                  {docs.map((doc) => (
                   <a
                     key={doc.href}
                     href={doc.href}
@@ -261,6 +312,67 @@ export default function DocsHome() {
                   >
                     {doc.label}
                   </a>
+                  ))}
+                </div>
+              </section>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 18, marginTop: 18 }}>
+            <section
+              style={{
+                padding: 28,
+                borderRadius: 24,
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(12px)',
+              }}
+            >
+              <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase' }}>Platform story</div>
+              <h2 style={{ margin: '10px 0 0', fontSize: 28 }}>From intent to governed execution</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginTop: 20 }}>
+                {story.map((item) => (
+                  <div
+                    key={item.step}
+                    style={{
+                      padding: 22,
+                      borderRadius: 20,
+                      background: 'rgba(255,255,255,0.02)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.5 }}>{item.step}</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, marginTop: 10 }}>{item.title}</div>
+                    <p style={{ color: '#d6d3c7', lineHeight: 1.7, marginTop: 12 }}>{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section
+              style={{
+                padding: 28,
+                borderRadius: 24,
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(12px)',
+              }}
+            >
+              <div style={{ color: '#b7ae8f', fontSize: 13, letterSpacing: 1.2, textTransform: 'uppercase' }}>Built for</div>
+              <h2 style={{ margin: '10px 0 0', fontSize: 28 }}>Teams that need power without losing control</h2>
+              <div style={{ display: 'grid', gap: 12, marginTop: 18 }}>
+                {audiences.map((audience) => (
+                  <div
+                    key={audience}
+                    style={{
+                      padding: '14px 16px',
+                      borderRadius: 16,
+                      background: 'rgba(255,255,255,0.02)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      color: '#f4f3ef',
+                    }}
+                  >
+                    {audience}
+                  </div>
                 ))}
               </div>
             </section>
