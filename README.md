@@ -1,58 +1,133 @@
 <p align="center">
-  <img src="./apps/docs/public/agentdock-logo.svg" alt="AgentDock OS" width="112" />
+  <img src="./apps/docs/public/agentdock-hero.svg" alt="AgentDock OS hero" />
 </p>
 
 <h1 align="center">AgentDock OS</h1>
 
+<p align="center"><strong>Open source operating system for governed AI agents.</strong></p>
+
 <p align="center">
-  Open source operating system for governed AI agents.
+  Self-hosted control plane for agents that work with code, browsers, Git, MCP, memory, skills, approvals, audit logs and cost policies.
 </p>
 
 <p align="center">
-  Build, run and govern AI agents that work with code, browser, Git, MCP, memory, skills, quality gates and automations — fully self-hosted.
-</p>
-
-<p align="center">
-  <a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0-blue" /></a>
-  <a href="./CONTRIBUTING.md"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen" /></a>
-  <a href="./SECURITY.md"><img alt="Security policy" src="https://img.shields.io/badge/security-policy-important" /></a>
-  <a href="./ROADMAP.md"><img alt="Roadmap" src="https://img.shields.io/badge/roadmap-public-purple" /></a>
+  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/leadtunic/Agentdock-os/ci.yml?branch=master" />
+  <img alt="License" src="https://img.shields.io/github/license/leadtunic/Agentdock-os" />
+  <img alt="Stack" src="https://img.shields.io/badge/stack-FastAPI%20%2B%20Next.js%20%2B%20TypeScript%20%2B%20Python-111827" />
+  <img alt="Deployment" src="https://img.shields.io/badge/deployment-Docker%20Compose%20%2B%20Dokploy-0f766e" />
+  <img alt="Governance" src="https://img.shields.io/badge/governance-first-7c3aed" />
 </p>
 
 ---
 
-## What is AgentDock OS?
+## What AgentDock OS is
 
-**AgentDock OS** is an open source, self-hosted platform for creating, running and governing AI agents. It combines visual development, browser automation, Git workflows, persistent memory, reusable skills, MCP servers, message channels, quality gates, approvals and audit logs into one modular platform.
+AgentDock OS is a modular, self-hosted platform for teams that want AI agents to do real work without losing control of permissions, approvals, observability or infrastructure ownership.
 
-AgentDock OS is designed for developers, internal platform teams and organizations that want useful autonomous agents without giving up control, security or ownership of infrastructure.
+It is built for developer teams, platform teams and open source operators who need agents that can inspect code, automate browsers, manage Git flows, register MCP servers, persist memory, reuse skills and interact through external channels.
 
-## Why this exists
+## Why it exists
 
-AI agents are moving from chat to action. They can edit code, run commands, operate browsers, read repositories and call external tools. That power needs infrastructure: policies, audit logs, approvals, memory, skills, quality gates and self-hosted deployment.
+AI agents are moving from chat to action. Once they can edit files, run commands, open pull requests and talk to external systems, they need infrastructure that treats them like governed runtime identities, not unrestricted chatbots.
 
-AgentDock OS is not just another coding assistant. It is an operational layer for governed AI agents.
+AgentDock OS provides that operational layer.
 
-## Core capabilities
+## What makes it different
 
-- **Visual coding agents** — select UI elements, describe changes and generate patches.
-- **Browser automation** — run isolated browser sessions with screenshots, snapshots and controlled actions.
-- **Git workflows** — create branches, diffs, commits and pull requests.
-- **Governed agents** — define what each agent can read, write, execute and access.
-- **Quality gates** — run lint, typecheck, tests, build, secret scans and custom checks.
-- **Memory and skills** — persist knowledge and reuse procedures across users, projects and organizations.
-- **MCP Hub** — register MCP servers with scoped tool permissions and audit logs.
-- **Message gateway** — interact with agents via WebChat, Telegram, Discord, Slack, email and webhooks.
-- **Audit and cost tracking** — trace prompts, tools, approvals, model usage and operational cost.
-- **Self-hosted deployment** — Docker Compose and Dokploy-ready architecture.
+- Self-hosted first.
+- Governance by default.
+- Human approval for sensitive actions.
+- Provider-agnostic AI layer.
+- MCP-native tool permissions.
+- Audit logs for every relevant action.
+- Cost tracking per agent, project and provider.
+- Modular services that can evolve independently.
+
+## What ships in this repository
+
+| Layer | Included modules |
+|---|---|
+| Surface | Web dashboard, CLI and visual dev toolbar |
+| Control plane | FastAPI API, auth, RBAC, governance, approvals, audit and costs |
+| Execution | Agent runtime, browser runtime, gateway, worker and sandbox runner |
+| Knowledge | Memory engine, skills engine and MCP Hub |
+| Delivery | Git workspace, quality gate, provider layer and plugin SDK |
+| Infra | Docker Compose, Dokploy Compose, healthchecks and persistent volumes |
+
+## Core user journeys
+
+1. Create an organization and project.
+2. Invite members and assign roles.
+3. Register a provider and test connectivity.
+4. Create a governed agent with role, budget and limits.
+5. Connect a repository and create an isolated worktree.
+6. Create a task and assign it to an agent.
+7. Run browser actions, Git changes and tool calls under policy.
+8. Trigger quality gates before merge or apply.
+9. Approve or reject sensitive actions.
+10. Inspect audit logs and cost dashboards.
+
+## Security and governance defaults
+
+- No agent gets blanket access by default.
+- `.env` is blocked unless explicitly allowed.
+- Destructive commands require approval.
+- Browser sessions use isolated profiles by default.
+- MCP tools are permissioned per agent and project.
+- File, command, browser and tool actions are policy-driven.
+- Every sensitive event is auditable.
+- Secrets are masked in logs and structured payloads.
+
+## Architecture
+
+```txt
+Web / CLI / Toolbar / Channels
+          |
+          v
+     AgentDock API
+          |
+  ---------------------------------------------
+  |            |             |                |
+Agent Runtime  Browser Runtime  Gateway  Worker/Sandbox
+  |            |             |                |
+Git Workspace  Playwright   Channels        Jobs/Tasks
+  |
+Quality Gate
+  |
+Audit Log + Cost Tracking + Approvals
+```
+
+## Supported providers
+
+| Provider | Status |
+|---|---|
+| OpenAI | Supported |
+| Anthropic | Supported |
+| Gemini | Supported |
+| Groq | Supported |
+| OpenRouter | Supported |
+| Ollama | Supported |
+| LM Studio | Supported |
+
+## Supported channels
+
+| Channel | Status |
+|---|---|
+| WebChat | Native |
+| Telegram | Supported |
+| Discord | Supported |
+| Slack | Supported |
+| Email | Supported |
+| Webhook | Supported |
+| WhatsApp Cloud API | Future profile |
 
 ## Quickstart
 
 ```bash
-git clone https://github.com/agentdock/agentdock-os.git
-cd agentdock-os
+git clone https://github.com/leadtunic/Agentdock-os.git
+cd Agentdock-os
 cp .env.example .env
-docker compose up -d
+docker compose up --build -d
 ```
 
 Open:
@@ -63,12 +138,28 @@ API:      http://localhost:8000
 API Docs: http://localhost:8000/docs
 ```
 
+## Local development
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Quality checks:
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
 ## Repository structure
 
 ```txt
-apps/          Web dashboard, docs site and playground
+apps/          Web dashboard, docs site and CLI
 packages/      Shared packages, toolbar, SDK and protocol contracts
-services/      API, agent runtime, browser runtime, memory, skills, gateway and workers
+services/      API, runtimes, gateway, worker and execution services
 plugins/       Built-in plugin manifests and plugin skeletons
 docs/          Product, architecture, deployment, security and developer docs
 infra/         Docker, Dokploy, Traefik, monitoring and infra references
@@ -87,6 +178,30 @@ infra/         Docker, Dokploy, Traefik, monitoring and infra references
 - [Plugin SDK](./docs/plugin-sdk/overview.md)
 - [Roadmap](./ROADMAP.md)
 
+## Roadmap
+
+The repository is structured around a public product evolution path:
+
+- Repository foundation
+- Core dashboard and API
+- Agent runtime and tasks
+- Git workspace and quality gates
+- Visual toolbar
+- Browser runtime
+- Memory and skills
+- MCP Hub
+- Message gateway
+- Production readiness
+
+## Community and governance
+
+- [Contributing](./CONTRIBUTING.md)
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Security Policy](./SECURITY.md)
+- [Governance](./GOVERNANCE.md)
+- [Changelog](./CHANGELOG.md)
+- [Adopters](./ADOPTERS.md)
+
 ## License
 
-AgentDock OS is licensed under **AGPL-3.0-only**. Commercial licensing can be added later for organizations that need different terms.
+AgentDock OS is licensed under **AGPL-3.0-only**.
