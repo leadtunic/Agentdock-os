@@ -16,7 +16,7 @@
     "@agentdock/shared": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "helmet": "^8.0.0",
+    "helmet": "^8.2.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
